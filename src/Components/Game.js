@@ -1,8 +1,8 @@
-import React from 'react';
-import Board from './Broad';
+import React,{Component} from 'react';
+import Board from './Board';
 
-function Game extends Component {
-    constructor(props); {
+class Game extends Component {
+    constructor(props){
     super(props);
     this.state = { 
         history: [
@@ -18,17 +18,17 @@ function Game extends Component {
 
     handleClick(i){
         const history =this.state.history.slice(0, this.state.stepNumber+1);
-            const current = history [history.length-1];
+            const current = history[history.length-1];
             const squares = current.squares.slice();
 
-            if( calculatewinner(squares)|| squares[i])
+            if( calculateWinner(squares)|| squares[i])
             {
                 return; 
             }
             squares[i]=this.state.xIsNext ? "X" : "O";
             this.setstate({
                 history: history.concat([
-                    squares : squares
+                    {squares : squares}
                 ]), 
                 stepNumber:history.length,
                 xIsNext: !this.state.xIsNext
@@ -38,7 +38,7 @@ function Game extends Component {
 
         jumpto(step)
         {
-            this.setstate({
+            this.setState({
                 stepNumber: step,
                 xIsNext: (step % 2)===0
             });
@@ -47,7 +47,7 @@ function Game extends Component {
     render(){
         const history =this.state.history;
         const current = history[this.state.stepNumber];
-        const winner = calculatewinner(current.squares);
+        const winner = calculateWinner(current.squares);
         const move = history.map((step,move) => {
             const desc = move ?
             'Go to move #' + move :
@@ -84,8 +84,9 @@ function Game extends Component {
             
         );
     }
+}
 
-    function calculatewinner (squares)
+    function calculateWinner (squares)
     {
         const lines =[
             [0,1,2],
@@ -98,7 +99,7 @@ function Game extends Component {
             [2,4,6]
         ];
 
-        for(let k=1; k<=lines.length;k++)
+        for(let k=1; k<lines.length;k++)
         {
             const[a,b,c] = lines[k];
 
@@ -106,7 +107,8 @@ function Game extends Component {
                 return squares[a];
 
         }
-    }
+    
     return null;
- 
-}
+
+    }
+export default Game
