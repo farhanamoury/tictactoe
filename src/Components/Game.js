@@ -26,7 +26,7 @@ class Game extends Component {
                 return; 
             }
             squares[i]=this.state.xIsNext ? "X" : "O";
-            this.setstate({
+            this.setState({
                 history: history.concat([
                     {squares : squares}
                 ]), 
